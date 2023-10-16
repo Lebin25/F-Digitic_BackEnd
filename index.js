@@ -5,6 +5,8 @@ const dotenv = require('dotenv').config()
 const PORT = process.env.PORT || 4000;
 
 const authRouter = require('./routes/authRoute');
+const productRouter = require('./routes/productRoute');
+const categoryRouter = require('./routes/prodcategoryRoute');
 const brandRouter = require('./routes/brandRoute');
 
 const bodyParser = require('body-parser');
@@ -23,6 +25,8 @@ app.use(cookieParser());
 
 
 app.use('/api/user', authRouter);
+app.use('/api/product', productRouter);
+app.use('/api/category', categoryRouter);
 app.use('/api/brand', brandRouter);
 
 app.use(notFound)
