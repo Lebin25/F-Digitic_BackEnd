@@ -22,6 +22,11 @@ const {
    getMyOrders,
    removeProductFromCart,
    updateProductQuantityFromCart,
+   getMonthWiseOrderIncome,
+   getYearlyTotalOrders,
+   getAllOrders,
+   getSingleOrder,
+   updateOrder,
 } = require("../controller/userCtrl");
 const { authMiddleware, isAdmin } = require("../middlewares/authMiddleware");
 const { checkout, paymentVerification } = require("../controller/paymentCtrl");
@@ -41,8 +46,10 @@ router.post("/order/paymentVerification", authMiddleware, paymentVerification);
 router.post("/cart/create-order", authMiddleware, createOrder);
 router.get("/all-users", getallUser);
 router.get("/getmyorders", authMiddleware, getMyOrders);
-// router.get("/getallorders", authMiddleware, isAdmin, getAllOrders);
-// router.post("/getorderbyid/:id", authMiddleware, isAdmin, getOrderById);
+router.get("/getallorders", authMiddleware, isAdmin, getAllOrders);
+router.get("/getOrder/:id", authMiddleware, isAdmin, getSingleOrder);
+router.get("/getMonthWiseOrderIncome", authMiddleware, getMonthWiseOrderIncome);
+router.get("/getyearlyorders", authMiddleware, getYearlyTotalOrders);
 router.get("/refresh", handleRefreshToken);
 router.get("/logout", logout);
 router.get("/wishlist", authMiddleware, getWishlist);
@@ -53,12 +60,6 @@ router.delete("/delete-product-cart/:cartItemId", authMiddleware, removeProductF
 router.delete("/update-product-cart/:cartItemId/:newQuantity", authMiddleware, updateProductQuantityFromCart);
 // router.delete("/empty-cart", authMiddleware, emptyCart);
 router.delete("/:id", deleteaUser);
-// router.put(
-//    "/order/update-order/:id",
-//    authMiddleware,
-//    isAdmin,
-//    updateOrderStatus
-// );
 router.put("/edit-user", authMiddleware, updatedUser);
 router.put("/save-address", authMiddleware, saveAddress);
 router.put("/block-user/:id", authMiddleware, isAdmin, blockUser);
