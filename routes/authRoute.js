@@ -18,14 +18,8 @@ const {
    saveAddress,
    userCart,
    getUserCart,
-   // emptyCart,
-   // applyCoupon,
    createOrder,
-   // getOrders,
-   // updateOrderStatus,
-   // getAllOrders,
-   // getOrderByUserId,
-   // getOrderById,
+   getMyOrders,
    removeProductFromCart,
    updateProductQuantityFromCart,
 } = require("../controller/userCtrl");
@@ -46,7 +40,7 @@ router.post("/order/paymentVerification", authMiddleware, paymentVerification);
 // router.post("/cart/applycoupon", authMiddleware, applyCoupon);
 router.post("/cart/create-order", authMiddleware, createOrder);
 router.get("/all-users", getallUser);
-// router.get("/get-orders", authMiddleware, getOrders);
+router.get("/getmyorders", authMiddleware, getMyOrders);
 // router.get("/getallorders", authMiddleware, isAdmin, getAllOrders);
 // router.post("/getorderbyid/:id", authMiddleware, isAdmin, getOrderById);
 router.get("/refresh", handleRefreshToken);

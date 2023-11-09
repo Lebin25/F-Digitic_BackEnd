@@ -48,7 +48,7 @@ var orderSchema = new mongoose.Schema(
             require: true
          },
       },
-      orderItem: [
+      orderItems: [
          {
             product: {
                type: mongoose.Schema.Types.ObjectId,
