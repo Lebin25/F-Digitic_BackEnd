@@ -410,13 +410,27 @@ const createOrder = asyncHandler(async (req, res) => {
    const { shippingInfo, orderItems, totalPrice, totalPriceAfterDiscount, paymentInfo } = req.body;
    const { _id } = req.user;
    try {
-      const order = await Order.create({
-         shippingInfo, orderItems, totalPrice, totalPriceAfterDiscount, paymentInfo, user: _id
-      })
-      res.json({
-         order,
-         success: true
-      })
+      let outStock = false;
+      for (let index = 0; index < orderItems.length; index++) {
+         const product = await Product.findOne({ _id: orderItems[index].product })
+         if ((product.quantity -= orderItems[index].quantity) >= 0) {
+            product.quantity -= orderItems[index].quantity
+            product.sold += orderItems[index].quantity
+            product.save()
+         } else {
+            outStock = true;
+         }
+      }
+
+      if (!outStock) {
+         const order = await Order.create({
+            shippingInfo, orderItems, totalPrice, totalPriceAfterDiscount, paymentInfo, user: _id
+         })
+         res.json({
+            order,
+            success: true
+         })
+      } else throw new Exception("Something Went Wrong! Maybe the Product is out stock, try again later!");
    } catch (error) {
       throw new Error(error);
    }
