@@ -50,7 +50,15 @@ const getaProduct = asyncHandler(async (req, res) => {
    const { id } = req.params;
    validateMongoDbId(id);
    try {
-      const findProduct = await Product.findById(id).populate("color").populate('ratings');
+      const findProduct = await Product.findById(id).populate("color").populate(
+         {
+            path: 'ratings',
+            populate: {
+               path: 'postedby',
+               select: 'firstname lastname'
+            }
+         }
+      );
       res.json(findProduct);
    } catch (error) {
       throw new Error(error);
