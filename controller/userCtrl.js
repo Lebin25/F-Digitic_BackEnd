@@ -414,7 +414,7 @@ const createOrder = asyncHandler(async (req, res) => {
       for (let index = 0; index < orderItems.length; index++) {
          const product = await Product.findOne({ _id: orderItems[index].product })
          if ((product.quantity -= orderItems[index].quantity) >= 0) {
-            product.quantity -= orderItems[index].quantity
+            //product.quantity -= orderItems[index].quantity
             product.sold += orderItems[index].quantity
             product.save()
          } else {
